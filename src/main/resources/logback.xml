@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <appender name="SYSOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>
+                ${CONSOLE_LOG_PATTERN}
+            </Pattern>
+        </encoder>
+    </appender>
+
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="ch.qos.logback" level="ERROR"/>
+    <logger name="org.hibernate" level="INFO"/>
+
+    <root level="INFO">
+        <appender-ref ref="SYSOUT"/>
+    </root>
+</configuration>

@@ -1,0 +1,6 @@
+---
+inherit: manifest-super.yml
+applications:
+- name: butterknife-service
+  env:
+    SPRING_PROFILES_ACTIVE: cloud

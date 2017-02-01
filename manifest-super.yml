@@ -1,0 +1,12 @@
+---
+memory: 2G
+instances: 1
+timeout : 180
+health-check-type: none
+services:
+  - mysql-new
+env:
+  SPRING_PROFILES_ACTIVE: cloud
+  JAVA_OPTS: "-XX:+UseCompressedOops -XX:+UseParNewGC -XX:NewRatio=1 -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:+CMSScavengeBeforeRemark -XX:+DisableExplicitGC -XX:CMSInitiatingOccupancyFraction=60 -XX:+UseCMSInitiatingOccupancyOnly"
+  JBP_CONFIG_OPEN_JDK_JRE: "memory_calculator: { memory_heuristics: {heap: 60, metaspace: 15, native: 15, stack: 10}, memory_initials: {metaspace: 50%} }"
+  MALLOC_ARENA_MAX: 2

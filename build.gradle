@@ -1,0 +1,83 @@
+buildscript {
+    ext {
+        springBootVersion = '1.4.3.RELEASE'
+        swaggerVersion = '2.6.0'
+        lombokVersion = '1.16.12'
+        mapStructVersion = '1.1.0.Final'
+    }
+}
+
+plugins {
+    id 'java'
+    id "org.springframework.boot" version "1.4.3.RELEASE"
+    id 'eclipse'
+    id 'idea'
+    id 'net.ltgt.apt' version '0.9'
+    id "org.flywaydb.flyway" version '4.0.3'
+}
+
+jar {
+    baseName = 'fg-product-service'
+    version = '1.0.0-SNAPSHOT'
+}
+
+flyway {
+    url = 'jdbc:mysql://localhost:3306/fgproducts?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false'
+    user = 'fgserviceuser'
+    password = 'P@ssw0rd1234'
+}
+
+sourceCompatibility = 1.8
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.0'
+}
+
+compileJava {
+    options.compilerArgs = [
+            '-Amapstruct.suppressGeneratorTimestamp=true',
+            '-Amapstruct.suppressGeneratorVersionInfoComment=true',
+            '-Amapstruct.unmappedTargetPolicy=WARN',
+            '-Amapstruct.defaultComponentModel=spring'
+    ]
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile('org.springframework.boot:spring-boot-starter-cache')
+    compile('org.springframework.cloud:spring-cloud-starter-bus-amqp')
+    compile('org.springframework.cloud:spring-cloud-starter-config')
+    compile('org.springframework.boot:spring-boot-starter-cloud-connectors')
+    compile('org.springframework.cloud:spring-cloud-starter-sleuth')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.springframework.retry:spring-retry')
+    //compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.session:spring-session')
+    compile('org.springframework.boot:spring-boot-starter-validation')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    runtime('mysql:mysql-connector-java:6.0.5')
+    compile('org.flywaydb:flyway-core:4.0.3')
+    compile('org.springframework.cloud:spring-cloud-cloudfoundry-connector:1.2.3.RELEASE')
+    compile('org.springframework.cloud:spring-cloud-spring-service-connector:1.2.3.RELEASE')
+    compile("io.springfox:springfox-swagger2:${swaggerVersion}")
+    compile("io.springfox:springfox-swagger-ui:${swaggerVersion}")
+    compile("io.springfox:springfox-staticdocs:${swaggerVersion}")
+
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
+    apt "org.projectlombok:lombok:$lombokVersion"
+
+    compileOnly "org.mapstruct:mapstruct-jdk8:$mapStructVersion"
+    apt "org.mapstruct:mapstruct-processor:$mapStructVersion"
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Camden.SR4"
+    }
+}
