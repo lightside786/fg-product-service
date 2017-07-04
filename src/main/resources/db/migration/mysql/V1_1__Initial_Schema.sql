@@ -1,5 +1,5 @@
--- Create syntax for TABLE 'PRODUCT_CATEGORY'
-CREATE TABLE `PRODUCT_CATEGORY` (
+-- Create syntax for TABLE 'product_category'
+CREATE TABLE `product_category` (
   `id`          BIGINT(20)   NOT NULL AUTO_INCREMENT,
   `record_id`   VARCHAR(36)  NOT NULL,
   `name`        VARCHAR(120) NOT NULL,
@@ -16,12 +16,12 @@ CREATE TABLE `PRODUCT_CATEGORY` (
   DEFAULT CHARSET = utf8;
 
 CREATE TRIGGER before_insert_cat
-BEFORE INSERT ON PRODUCT_CATEGORY
+BEFORE INSERT ON product_category
 FOR EACH ROW
   SET NEW.record_id = uuid();
 
--- Create syntax for TABLE 'PRODUCTS'
-CREATE TABLE `PRODUCTS` (
+-- Create syntax for TABLE 'products'
+CREATE TABLE `products` (
   `id`          BIGINT(20)   NOT NULL AUTO_INCREMENT,
   `name`        VARCHAR(120) NOT NULL,
   `description` VARCHAR(120) NOT NULL,
@@ -33,19 +33,19 @@ CREATE TABLE `PRODUCTS` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_PRD_NAME` (`name`),
   UNIQUE KEY `UK_PRD_RECORD_ID` (`record_id`),
-  CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `PRODUCT_CATEGORY` (`id`)
+  CONSTRAINT `PRODUCTS_IBFK_1` FOREIGN KEY (`category_id`) REFERENCES `product_category` (`id`)
     ON DELETE CASCADE
 )
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
 CREATE TRIGGER before_insert_products
-BEFORE INSERT ON PRODUCTS
+BEFORE INSERT ON products
 FOR EACH ROW
   SET NEW.record_id = uuid();
 
--- Create syntax for TABLE 'PRODUCT_IMAGES'
-CREATE TABLE `PRODUCT_IMAGES` (
+-- Create syntax for TABLE 'product_images'
+CREATE TABLE `product_images` (
   `id`          BIGINT(20)   NOT NULL AUTO_INCREMENT,
   `product_id`  BIGINT(20)   NOT NULL,
   `record_id`   VARCHAR(36)  NOT NULL,
@@ -54,20 +54,20 @@ CREATE TABLE `PRODUCT_IMAGES` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_PRD_IMG_RCRD_ID` (`record_id`),
   UNIQUE KEY `UK_PRD_IMG` (`product_id`, `url`),
-  CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`)
+  CONSTRAINT `PRODUCT_IMAGES_IBFK_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
     ON DELETE CASCADE
 )
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
 CREATE TRIGGER before_insert_prd_img
-BEFORE INSERT ON PRODUCT_IMAGES
+BEFORE INSERT ON product_images
 FOR EACH ROW
   SET NEW.record_id = uuid();
 
 
--- Create syntax for TABLE 'TAGS'
-CREATE TABLE `TAGS` (
+-- Create syntax for TABLE 'tags'
+CREATE TABLE `tags` (
   `id`        BIGINT(20)  NOT NULL AUTO_INCREMENT,
   `tag`       VARCHAR(60) NOT NULL,
   `record_id` VARCHAR(36) NOT NULL,
@@ -78,12 +78,12 @@ CREATE TABLE `TAGS` (
   DEFAULT CHARSET = utf8;
 
 CREATE TRIGGER before_insert_tag
-BEFORE INSERT ON TAGS
+BEFORE INSERT ON tags
 FOR EACH ROW
   SET NEW.record_id = uuid();
 
--- Create syntax for TABLE 'PRODUCT_TAGS'
-CREATE TABLE `PRODUCT_TAGS` (
+-- Create syntax for TABLE 'product_tags'
+CREATE TABLE `product_tags` (
   `id`         BIGINT(20)  NOT NULL AUTO_INCREMENT,
   `product_id` BIGINT(20)  NOT NULL,
   `tag_id`     BIGINT(20)  NOT NULL,
@@ -91,22 +91,22 @@ CREATE TABLE `PRODUCT_TAGS` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_PRD_TAG_ID` (`product_id`, `tag_id`),
   UNIQUE KEY `UK_PRD_TAG_RCRD_ID` (`record_id`),
-  CONSTRAINT `product_tags_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`)
+  CONSTRAINT `PRODUCT_TAGS_IBFK_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
     ON DELETE CASCADE,
-  CONSTRAINT `product_tags_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `TAGS` (`id`)
+  CONSTRAINT `PRODUCT_TAGS_IBFK_2` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`)
     ON DELETE CASCADE
 )
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
 
 CREATE TRIGGER before_insert_prd_tag
-BEFORE INSERT ON PRODUCT_TAGS
+BEFORE INSERT ON product_tags
 FOR EACH ROW
   SET NEW.record_id = uuid();
 
 
--- Create syntax for TABLE 'PRODUCTS'
-CREATE TABLE `PRODUCT_PRICE` (
+-- Create syntax for TABLE 'products'
+CREATE TABLE `product_price` (
   `id`             BIGINT(20)    NOT NULL AUTO_INCREMENT,
   `product_id`     BIGINT(20)    NOT NULL,
   `record_id`      VARCHAR(36)   NOT NULL,
@@ -120,7 +120,7 @@ CREATE TABLE `PRODUCT_PRICE` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_PRICE_RCD_ID` (`record_id`),
   UNIQUE KEY `UK_PRICE_DATE` (`product_id`, `eff_start_date`),
-  CONSTRAINT `price_prd_fk` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`)
+  CONSTRAINT `PRICE_PRD_FK` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
     ON DELETE CASCADE
 )
   ENGINE = INNODB
@@ -128,6 +128,6 @@ CREATE TABLE `PRODUCT_PRICE` (
 
 
 CREATE TRIGGER before_insert_prod_price
-BEFORE INSERT ON PRODUCT_PRICE
+BEFORE INSERT ON product_price
 FOR EACH ROW
   SET NEW.record_id = uuid();

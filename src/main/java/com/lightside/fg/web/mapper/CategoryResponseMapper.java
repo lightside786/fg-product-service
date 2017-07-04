@@ -11,8 +11,9 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring", uses = {DateMapper.class})
 public interface CategoryResponseMapper extends MapperAdapter<ProductCategory, ProductCategoryDTO> {
-
-    @Mapping(source = "recordId", target = "id")
+    
+    @MapperMethod
+    @Mapping(source = "recordId", target = "id", qualifiedBy = {MapperMethod.class})
     ProductCategoryDTO map(ProductCategory source);
 
 }
