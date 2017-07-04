@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.Date;
 
 
 @Entity
@@ -27,9 +26,8 @@ public class ProductPrice implements Serializable {
 
     private String currency;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "eff_end_date")
-    private Date effEndDate;
+    private Timestamp effEndDate;
 
     @Column(name = "eff_start_date")
     private Timestamp effStartDate;
@@ -65,7 +63,7 @@ public class ProductPrice implements Serializable {
         return currency;
     }
 
-    public Date getEffEndDate() {
+    public Timestamp getEffEndDate() {
         return effEndDate;
     }
 

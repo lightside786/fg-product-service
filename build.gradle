@@ -1,15 +1,15 @@
 buildscript {
     ext {
-        springBootVersion = '1.4.3.RELEASE'
+        springBootVersion = '1.5.4.RELEASE'
         swaggerVersion = '2.6.0'
         lombokVersion = '1.16.12'
         mapStructVersion = '1.1.0.Final'
     }
-}
+    }
 
 plugins {
     id 'java'
-    id "org.springframework.boot" version "1.4.3.RELEASE"
+    id "org.springframework.boot" version "1.5.4.RELEASE"
     id 'eclipse'
     id 'idea'
     id 'net.ltgt.apt' version '0.9'
@@ -18,12 +18,12 @@ plugins {
 
 jar {
     baseName = 'fg-product-service'
-    version = '1.0.0-SNAPSHOT'
+    version  = '1.0.0-SNAPSHOT'
 }
 
 flyway {
-    url = 'jdbc:mysql://localhost:3306/fgproducts?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false'
-    user = 'fgserviceuser'
+    url = 'jdbc:mysql://fgcart.cw8ksjytudj2.us-east-1.rds.amazonaws.com:3306/fgproduct?useUnicode=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false'
+    user = 'fgproduct'
     password = 'P@ssw0rd1234'
 }
 
@@ -54,15 +54,15 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-cloud-connectors')
     compile('org.springframework.cloud:spring-cloud-starter-sleuth')
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
-    compile('org.springframework.retry:spring-retry')
+    //compile('org.springframework.retry:spring-retry')
     //compile('org.springframework.boot:spring-boot-starter-security')
     compile('org.springframework.session:spring-session')
     compile('org.springframework.boot:spring-boot-starter-validation')
     compile('org.springframework.boot:spring-boot-starter-web')
     runtime('mysql:mysql-connector-java:6.0.5')
     compile('org.flywaydb:flyway-core:4.0.3')
-    compile('org.springframework.cloud:spring-cloud-cloudfoundry-connector:1.2.3.RELEASE')
-    compile('org.springframework.cloud:spring-cloud-spring-service-connector:1.2.3.RELEASE')
+    compile('org.springframework.cloud:spring-cloud-cloudfoundry-connector')
+    compile('org.springframework.cloud:spring-cloud-spring-service-connector')
     compile("io.springfox:springfox-swagger2:${swaggerVersion}")
     compile("io.springfox:springfox-swagger-ui:${swaggerVersion}")
     compile("io.springfox:springfox-staticdocs:${swaggerVersion}")
@@ -78,6 +78,6 @@ dependencies {
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Camden.SR4"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Dalston.SR1"
     }
 }
